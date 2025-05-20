@@ -1,3 +1,13 @@
+## PREREQUISITES
+
+| Tool        | Description                         |
+| ----------- | ----------------------------------- |
+| Node.js     | v16+                                |
+| Docker      | Installed & running locally         |
+| Web Browser | For terminal access via WebSocket   |
+
+ 
+ 
  # Holesail
 
 [Join our Discord Support Server](https://discord.gg/TQVacE7Vnj) [Join our Reddit Community](https://www.reddit.com/r/holesail/)
@@ -68,3 +78,40 @@ Holesail is built on and inspired by following open-source projects:
 
 - hypertele: https://github.com/bitfinexcom/hypertele
 - holepunch: https://holepunch.to
+
+
+## INSTALL PACKAGES:
+npm install
+
+## RUN SERVER WITH IMAGE DETAILS
+
+node demo-index.js --image ubuntu --time 10 --force --live --connector 89fd199803cd2aaf4b5cdba373a970a9e6a08f86547f26c24aae3efee062
+
+*Includes image name,timestamp, status and connector id*
+
+## EXPLANATION
+
+Last code file to run, on successful running, you will receive the add-gpu form link, containing provider's JWT Token. Open the same , provide details and click on add.
+
+On running , you will receive the holesail connection string. Open your Powershell/Mac
+Terminal and paste: holesail  <connection-string> --port 8686
+
+Now your client peer device is connected to the provider's peer device.
+
+In the code file's terminal, you will receive the container-ID. Copy that ID, go to the frontend localhost> Terminal Tab> paste the container-ID >Check container status> If status shows "running" > click on 'Connect'> The provider's container's Terminal is now connected.
+
+**🧩 Features**
+
+🐳 *Docker Container Lifecycle Management*
+Create, start, stop, remove containers using REST APIs.
+
+📡 *WebSocket Terminal Access*
+Real-time terminal interaction with running Docker containers.
+
+🧠 *Tokenized GPU Registration*
+Generates and registers containers using unique access tokens.
+
+⚙️ *Client/Server CLI Modes*
+Supports running as a client or host server via CLI arguments.
+
+🔒 *IPv4 DNS Preference & Graceful Exit*

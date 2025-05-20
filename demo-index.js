@@ -441,13 +441,18 @@ console.log("above start")
  */
 function setupWebSocket(wss, docker) {
   wss.on("connection", (ws, req) => {
+    const urlParts = req.url.split('/');
+    const containerId = urlParts[urlParts.length - 1];
+
     if (!containerId) {
-      ws.send("No active container.");
+      ws.send("No container ID provided in URL.");
       ws.close();
       return;
     }
 
+    console.log("[INFO] WebSocket connected for container:", containerId);
     const container = docker.getContainer(containerId);
+
     container.exec(
       {
         AttachStdin: true,
@@ -464,7 +469,7 @@ function setupWebSocket(wss, docker) {
         }
 
         exec.start({ hijack: true, stdin: true }, (err, stream) => {
-          console.log("Terminal connected.", containerId);
+          console.log("Terminal connected to container:", containerId);
           if (err) {
             console.error("Stream error:", err);
             ws.close();
@@ -472,12 +477,19 @@ function setupWebSocket(wss, docker) {
           }
 
           ws.on("message", (msg) => stream.write(msg));
+
           stream.on("data", (chunk) => ws.send(chunk.toString()));
+
+          ws.on("close", () => {
+            stream.end();
+            console.log("WebSocket closed for container:", containerId);
+          });
         });
       }
     );
   });
 }
+
 
 /**
  * Setup Docker management server
